@@ -20,6 +20,7 @@
                                    type="text"
                                    class="form-control"
                                    minlength="3"
+                                   value="{{ old('title', $item->title) }}"
                                    required>
                         </div>
 
@@ -28,6 +29,7 @@
                             <input name="slug"
                                    id="slug"
                                    type="text"
+                                   value="{{ old('slug', $item->slug) }}"
                                    class="form-control">
                         </div>
 
@@ -52,8 +54,8 @@
                             <label for="description">Описание</label>
                             <textarea name="description"
                                       id="description"
-                                      rows="3">
-                                {{ $item->description }}
+                                      class="form-control"
+                                      rows="3">{{ old('description', $item->description) }}
                             </textarea>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="row justify-align-center">
+    <div class="justify-align-center">
         <div class="container">
             <div class="col-md-12">
                 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
