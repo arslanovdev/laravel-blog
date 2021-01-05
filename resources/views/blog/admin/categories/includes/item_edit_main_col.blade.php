@@ -34,9 +34,9 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="parent_ud">Родитель</label>
-                            <select name="parent_ud"
-                                    id="parent_ud"
+                            <label for="parent_id">Родитель</label>
+                            <select name="parent_id"
+                                    id="parent_id"
                                     type="text"
                                     class="form-control"
                                     placeholder="Выберите категорию"
@@ -55,8 +55,7 @@
                             <textarea name="description"
                                       id="description"
                                       class="form-control"
-                                      rows="3">{{ old('description', $item->description) }}
-                            </textarea>
+                                      rows="3">{{ old('description', $item->description) }}</textarea>
                         </div>
                     </div>
                 </div>
