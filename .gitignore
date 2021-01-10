@@ -91,3 +91,6 @@ Homestead.json
 /public/.htaccess
 /storage
 storage/*.key
+/composer.lock
+/.phpstorm.meta.php
+/_ide_helper_models.php
