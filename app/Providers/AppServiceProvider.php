@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use App\Observers\BlogPostObserver;
+use App\Models\BlogPost;
 
 class AppServiceProvider extends ServiceProvider
 {
