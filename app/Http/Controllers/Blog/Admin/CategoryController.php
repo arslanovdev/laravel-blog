@@ -6,8 +6,9 @@ use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use App\Repositories\BlogCategoryRepository;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 
 /**
  * Управление категориями блога
@@ -31,7 +32,7 @@ class CategoryController extends BaseController
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function index()
     {
@@ -44,7 +45,7 @@ class CategoryController extends BaseController
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -60,14 +61,11 @@ class CategoryController extends BaseController
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(BlogCategoryCreateRequest $request)
     {
         $data = $request->all();
-        if (empty($data['slug'])) {
-            $data['slug'] = Str::slug($data['title']);
-        }
 
         $item = new BlogCategory($data);
         $item->save();
@@ -88,7 +86,7 @@ class CategoryController extends BaseController
      *
      * @param int                    $id
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit($id)
     {
@@ -107,14 +105,14 @@ class CategoryController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param BlogCategoryUpdateRequest $request
+     * @param int                       $id
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
     {
-        $item = $this->blogCategoryRepository->getEdit();
+        $item = $this->blogCategoryRepository->getEdit($id);
 
         if (empty($item)) {
             return back()
