@@ -6,7 +6,6 @@ use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogCategory;
 use App\Repositories\BlogCategoryRepository;
-use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 
@@ -36,7 +35,7 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $paginator = $this->blogCategoryRepository->getAllWithPaginate(5);
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(25);
 
         return view('blog.admin.categories.index',
             compact('paginator'));
@@ -60,7 +59,7 @@ class CategoryController extends BaseController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param BlogCategoryCreateRequest $request
      * @return Response
      */
     public function store(BlogCategoryCreateRequest $request)
