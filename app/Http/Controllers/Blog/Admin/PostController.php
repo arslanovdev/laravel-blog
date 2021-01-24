@@ -8,6 +8,7 @@ use App\Http\Requests\BlogPostUpdateRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
+use App\Http\Requests\BlogPostCreateRequest;
 
 /**
  * Управление статьями блога
@@ -22,7 +23,7 @@ class PostController extends BaseController
     private $blogPostRepository;
     private $blogCategoryRepository;
 
-    public function __construct()
+    public function __construct ()
     {
         parent::__construct();
 
@@ -35,7 +36,7 @@ class PostController extends BaseController
      *
      * @return Response
      */
-    public function index()
+    public function index ()
     {
         $paginator = $this->blogPostRepository->getAllWithPaginate();
 
@@ -45,10 +46,10 @@ class PostController extends BaseController
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
-    public function edit($id)
+    public function edit ($id)
     {
         $item = $this->blogPostRepository->getEdit($id);
         if (empty($item)) {
@@ -63,33 +64,47 @@ class PostController extends BaseController
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Создание нового поста
      *
      * @return void
      */
-    public function create()
+    public function create ()
     {
-        //
+        $item = new BlogPost();
+        $categoryList
+            = $this->blogCategoryRepository->getForComboBox();
+
+        return view('blog.admin.posts.edit',
+            compact('item', 'categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param BlogPostCreateRequest $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store (BlogPostCreateRequest $request)
     {
-        //
+        $data = $request->input();
+        $item = (new BlogPost())->create($data);
+
+        if ($item) {
+            return redirect()->route('blog.admin.posts.edit', [$item->id])
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return back()->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput();
+        }
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
-    public function show($id)
+    public function show ($id)
     {
         //
     }
@@ -101,7 +116,7 @@ class PostController extends BaseController
      * @param int                   $id
      * @return RedirectResponse
      */
-    public function update(BlogPostUpdateRequest $request, $id)
+    public function update (BlogPostUpdateRequest $request, $id)
     {
         $item = $this->blogPostRepository->getEdit($id);
 
@@ -129,10 +144,10 @@ class PostController extends BaseController
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy ($id)
     {
         dd(__METHOD__, $id, request()->all());
     }
