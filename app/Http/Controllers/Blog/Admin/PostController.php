@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Requests\BlogPostCreateRequest;
+use App\Models\BlogPost;
 
 /**
  * Управление статьями блога
